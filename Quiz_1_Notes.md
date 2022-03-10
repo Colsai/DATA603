@@ -1,4 +1,4 @@
-#Quiz 1 Notes
+# Quiz 1 Notes
 
 ## Chapter 2:
 Consistency, Availability, Partitioning = Cap Theorem
@@ -79,10 +79,7 @@ Distributed key/value store created by the NSA and based on bigTable.
 Highly available, distributed, partitioned row store NoSQL database that follows Dynamo DB design principles. Distributed database hat is a collection
 of nodes working together to serve the dataset. It has a partitioned row store, and is decentralized, with every node being identical. 
 
-
-
-
-
+<hr/>
 
 ## Chapter 3
 
