@@ -166,6 +166,51 @@ Data Lakes are large repositories of data, usually as object blobs. It can inclu
 ### Data lakes are good at huge volumes of data, where data can be raw or refined, allows for some data transformations, requires metadata driven approach, and good for advanced analytics and discovery.
 ### Data warehouses are good for cheaper costs, cleansed data that efficiently uses CPU, transforming data once, and good for historical analysis or repeatable reporting cases. 
 
+# Chapter 4
+## Cross-Cutting Principles (principles across multiple types of data)
+- Reduce I/O: Reduce the input and output requirements, which is the communication between the information processing system and outside world
+- Data Serialization (converting via serialization into bytes) and compression (making data smaller by format) is very important
+- Work with Key Value Pairs
 
+## CAP Theorem: Consistent, Available, and Partition Tolerance
+- Big data systems have eventual consistency, but not strong consistency
+- Consistency can be tuned or adjusted to set a level for the system
 
+## More considerations 
+- Decouple Storage and Compute: Important to split storage and compute, which has benefits with a big-data system now, as data is often in huge repositories.
+- Column vs row data storage, or avro vs parquet, can be important for time.
+- Treatment of sparse data is also important
+- Sharding, the breaking up of data into logical shards, such as different rows, columns, etc.
+- I/O Bound: Data requested is slower than data consumed (more time spent requesting than processing)
+- CPU Bound: Data requested is FASTER than data consumed (processor is bottleneck)
+- Memory Bound: Time to complete computational problems is decided by memory.
+
+# Chapter 5: Apache Spark
+Spark is a unified engine for large-scale data processing. It incorporates mutliple libraries for machine learning, SQL, structured streaming, and GraphX for graph processing. 
+It was made to be fast; uses commodity servers with multicore CPUs, large memories, efficient with mutlitheading and parallel processing. Computations are a DAG (Directed acyclic graph), with a DAG scheduler and query optimizer that constructs an efficient computational graph. 
+- The graph is decomposed into tasks executed in parallel. Tungsten, the execution engine Spark uses, uses whole-stage coed generation to generate compact code for execution. 
+- Spark is easy to use, with a fundamental abstraction of simple logical data structure (called RDD), and set of transformations and actions as operations (simple programming model for building big data applications in other languages).
+- It is modular, with many supported languages and core components.
+- It decouples compute and storage (unlike hadoop), and uses connectors to read/write.
+
+## Spark SQL 
+Integrates relational processing/tabular data abstraction with Spark API. This module for structured data provides spark with more information about the structure of the data, as well as optimizing. It can interact using SQL and dataset API
+
+## Spark MLib
+- Spark has a machine learning library for algorithms, featurization, pipelines, persistence, and utilities.
+- spark.mllib package uses rdd based apis.
+- spark.ml package uses dataframe based api with a more friendly api with tungsten/catalyst optimiziation
+
+## Structured Streaming
+-Scalable and fault-tolerant stream processing engine, it is based in scala, java, python, or r.
+- It supports streaming aggregations, event-time windows, stream-to-batch joins
+
+## GraphX
+- Library for manipulating graphs (such as social network, or routes), it performs graph parallel computaions and provides standard graph algorithms for analysis, connections, and traversals. 
+
+# Format
+
+Client app/Spark Driver/SparkSession interact with cluster manager, which interacts with spark executor
+
+-- Slide 13
 
