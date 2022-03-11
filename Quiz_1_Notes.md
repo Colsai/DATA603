@@ -209,8 +209,37 @@ Integrates relational processing/tabular data abstraction with Spark API. This m
 - Library for manipulating graphs (such as social network, or routes), it performs graph parallel computaions and provides standard graph algorithms for analysis, connections, and traversals. 
 
 # Format
-
 Client app/Spark Driver/SparkSession interact with cluster manager, which interacts with spark executor
 
--- Slide 13
+Spark Application has the application, an executor, and the cluster manager.
+
+## Spark Driver
+Runs main() function, and is responsible for instantiating sparksession, requesting resources, transforming spark application into one or more spark jobs. Each job is transformed into a DAG computation, and it schedules and distributes work across executors.
+
+## Spark Job, Stages, Tasks
+- Spark Driver: Transforms Spark application into one or more Spark Jobs. Each job is transformmed into a DAG computation, stages are made up of DAG nodes and are comprised of tasks (units of execution).
+- SparkSession: Unified conduit to all spark operations and data, which is subsumed of all previous entry points to spark, including sparkcontext, sqlcontext, hivecontext, sparkconf, and streamingcontext. It is a single unified entry point to all of Spark functionality, and can be created per JVM (Java virtual machine)
+
+## Transformations and Actions
+- Spark operations are either transformations or actions. 
+- Transformations transform spark dataframes into new dataframes.
+- Actions trigger the lazy evaluation of all recorded information. 
+- Lazy evaluation is what allows spark to optimize queries, rearrange transformations, coalesce them, and optimize them into stages for executions.
+
+Lineage and Data immutability provides fault tolerance, where spark records each transformation in its lineage. Dataframes and RDDs are immutable between transformations, and the original state can be reproduced by replaying the recorded lineage. 
+
+## Spark RDD
+- RDDs are resilient distributed datasets. It is a low-level API, and primary API in spark 1. It is imuttable, partitioned collection of records that can be operated in paralllel. Unlike dataframes, RDD records are objects of the programming language used. They can not be optimized in spark, as spark does not understand the inner structure of the structure.
+example: rdd.map, rdd.flatmap, rdd.filter, rdd.distinct, rdd.sample
+Other fuctions: reducebykey, groupbykey, combinebykey, mapvalues, flatmapvalues, keys,values, sortbykey, subtractbykey,join,rightouterjoin,leftouterjoin,cogroup
+
+Lambda functions, or small anonymous functions that take arguments, are used a lot
+
+## RDD Actions
+Example- The Reduce() function, which takes an operation that operates on two elements and returns an element of same type.
+
+- Creating Key/Value Pair RDDs is done by running a map function that returns key value pairs. 
+- Filter on value, aggregations, grouping data, data joins, sorting data
+- Python can pass functions to spark, for shorter functions, lambda, or locally defined functions.
+- Map and filter are element-wise transformations, common transformations. Squar values, string splitting.
 
